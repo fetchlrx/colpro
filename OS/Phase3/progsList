@@ -1,0 +1,11 @@
+progs/addVector1.s
+progs/addVector.s
+progs/fact1.s
+progs/fact2.s
+progs/io.s
+progs/simple1.s
+progs/simple2.s
+progs/sub.s
+progs/subVector.s
+progs/sum1.s
+progs/sum2.s

@@ -1,0 +1,1 @@
+g++ -o FS main.cpp filesys.cpp sdisk.cpp
