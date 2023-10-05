@@ -444,19 +444,17 @@ void OS::context_switch(int status)
       running->wait_end = vm.clock+27; //timestamp leaving ready queue
       running->io_start = vm.clock; //timestamp entering wait Q
       waitQ.push(running); // move program to waitQ
-      if(status == 6){
+      if(status == 6)
+      {
          read(ioReg); //call read()
          if(DEBUG > 0)
          {
             cout << "READ CALL TO OS" << endl;
          }
       }
-      else if(status == 7){
+      else if(status == 7)
+      {
          write(ioReg); //call write()
-         if(DEBUG > 0)
-         {
-            cout << "WRITE CALL TO OS" << endl;
-         }
       }
    }
    else //error

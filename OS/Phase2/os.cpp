@@ -281,7 +281,6 @@ void OS::read(int reg)
 }
 void OS::write(int reg)
 {
-   cout << "WRITE   " << running->process << endl;
    //open readfile
    //write r[reg] inside PCB
    if(running->r[reg] > 32767) //negative values

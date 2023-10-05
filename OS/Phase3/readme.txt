@@ -1,4 +1,4 @@
- 
+  
  * Description: This Code is an implementation of a low level, 16-bit Operating System.
  *    This OS has multi-programming ability, as well as paging ability. During initialization,
  *    ths OS will take a list of processes listed in a program file. It will command the VM to 
@@ -26,3 +26,24 @@
  *   .out files store any output from a program. Lastly, .in files will store any input 
  *   needed by a program. The OS will context switch using a round-robin implementation, 
  *   while all processes currently have the same priority, meaning there is no preemption. 
+ * ----------------------------------------------------------------------------------------
+ * Run the code by doing the following:
+ * >./OS progsList lru
+ * .o, .out and .st files will be created in the progs/ directory. 
+ *    -Verify .out files have similar output as the following example:
+ *       
+ *    Output: 720
+ *    ------Accounting Information------
+ *    CPU: 1883
+ *    Waiting Time: 6121
+ *    Turnaround: 8265
+ *    I/O Time: 261
+ *    Largest Stack Size: 36
+ *    Page Faults: 5
+ *    Stack Faults: 0
+ *    
+ *    System Time: 2707
+ *    System CPU Utilization:99.7129
+ *    User CPU Utilization: 71.2144
+ *    Throughput: 1.16972
+ *    Hit Ratio: 94.0835
