@@ -74,11 +74,11 @@ OS::OS(char* progList, char* page_replacement_algorithm)
    }
    
    //Gathers all *.s files and puts them into a file called "progs"
-    system("ls progs/*.s > progsList");
-   
-    progs_file.open(progList, ios::in);
-    //The while loops loops through all files in "progs" and assemble their 
-    //*.o file and also loads them into memory with new PCB for each
+   system("ls progs/*.s > progsList");
+
+   progs_file.open(progList, ios::in);
+   //The while loops loops through all files in "progs" and assemble their 
+   //*.o file and also loads them into memory with new PCB for each
    while(jobs.size() < 5 && progs_file.good()) 
    {
       string sfilename; //declaration
@@ -92,20 +92,20 @@ OS::OS(char* progList, char* page_replacement_algorithm)
       //load process and create new PCB
       load_process(ofilename);
       
-        //push processor into jobs list
-        jobs.push_back(p);
+      //push processor into jobs list
+      jobs.push_back(p);
    }   
 
    //push jobs into readyQ
-    list<PCB*>::iterator it = jobs.begin();
-    for(it; it != jobs.end(); it++)
+   list<PCB*>::iterator it = jobs.begin();
+   for(it; it != jobs.end(); it++)
    {
-         readyQ.push(*it);   
+      readyQ.push(*it);   
       (*it)->ready_start = vm.clock; 
    }
    
-    //open streams .o file, .out (output) file, and .in (input file)
-    for(it = jobs.begin(); it != jobs.end(); it++)
+   //open streams .o file, .out (output) file, and .in (input file)
+   for(it = jobs.begin(); it != jobs.end(); it++)
    {
       string ofile = (*it)->process + ".o";
       (*it)->o.open(ofile.c_str(), ios::in | ios::out);
@@ -119,7 +119,8 @@ OS::OS(char* progList, char* page_replacement_algorithm)
    }
    
    //Debugging information
-   if(DEBUG > 1){
+   if(DEBUG > 1)
+   {
       cout << "-------------------------------------------------" << endl;
       cout << "--------------inverted_page_table----------------" << endl;
       for(int i = 0; i < inverted_page_table.size(); i++)
@@ -133,7 +134,8 @@ OS::OS(char* progList, char* page_replacement_algorithm)
 OS::~OS()
 {
    list<PCB* >::iterator it;
-   for(it = jobs.begin(); it != jobs.end(); it++) {
+   for(it = jobs.begin(); it != jobs.end(); it++) 
+   {
       delete *it;
    }
 }
@@ -201,8 +203,8 @@ void OS::load_process(string ofilename){
    
    set_inverted(victim, p->process_id, page1);
    
-    //Close stream
-    objectfile.close();
+   //Close stream
+   objectfile.close();
 }
 
 /*///////////////////////////////////////////////////////////////////////////////////////////////
@@ -325,7 +327,8 @@ void OS::context_switch(int status)
    }
    else if(status == 1)// 1 = successful halt.
    { 
-      if(DEBUG > 0){
+      if(DEBUG > 0) 
+      {
          cout << "SUCCESSFULLY HALTING PROGRAM: " << running->process << endl;
       }
       halt++;
@@ -645,8 +648,8 @@ void OS::syncPCB()
    running->statusRegister = vm.statusRegister;
    running->regs = vm.regs;
    
-    if(vm.stackPointer < MEM_SIZE) //there is a stack
-    {
+   if(vm.stackPointer < MEM_SIZE) //there is a stack
+   {
       //open stack file
       string stackfile = running->process + ".st";
       running->st.open(stackfile.c_str(), ios::out);
@@ -666,7 +669,7 @@ void OS::syncPCB()
          }
       }   
       running->st.close();
-      }
+   }
    return;
 }
 
@@ -710,8 +713,8 @@ void OS::write(int reg)
    if(running->regs[reg] > 32767) //negative values
    {   
       int temp;
-         temp = running->regs[reg] | 4294901760; //sign extend to 32 bits
-       running->out << "Output: " << temp << endl;
+      temp = running->regs[reg] | 4294901760; //sign extend to 32 bits
+      running->out << "Output: " << temp << endl;
    }   
    else //positive values
    {
@@ -793,7 +796,8 @@ int OS::get_victim()
       free_frame = (inverted_page_table[j] & 1); //extract valid/invalid bit
       if(free_frame == 0)
       {   
-         if(alg == "fifo"){
+         if(alg == "fifo")
+         {
             fifo.push(j);
          }
          return j;
@@ -868,13 +872,15 @@ void OS::set_inverted(int frame, int p_id, int page)
       cout << "-----------------Inverted Page Table--------------" << endl;
       for(int i = 0; i < inverted_page_table.size(); i++)
       { 
-         if(i != 0 &&  (i % 8) == 0){
+         if(i != 0 &&  (i % 8) == 0)
+         {
             cout << endl;
          }
          int p = (inverted_page_table[i] >> (MAX_PAGE_BITS + 1));
          int pa = ((inverted_page_table[i] >> 1) & 1023);
          cout << "Frame";
-         if(i < 10){
+         if(i < 10)
+         {
             cout << "0";
          }
          cout << i << "=" << p << "-" << pa << "||";
@@ -905,9 +911,9 @@ void OS::reset_page_table_entry(int frame)
    page &= (MAX_PAGE); 
 
    list<PCB*>::iterator it = jobs.begin();
-    for(it; it != jobs.end(); it++)
+   for(it; it != jobs.end(); it++)
    {
-         if((*it)->process_id == p_id)
+      if((*it)->process_id == p_id)
       {
          //check if the page we are kicking out has been modified. 
          if((*it)->pagetable.get_mod(page)) 
@@ -1045,7 +1051,8 @@ void OS::modify(int page)
        running->o << obj[i] << endl;
       if(DEBUG > 0)
       {
-         if(i == 0){
+         if(i == 0)
+         {
                cout << "Modifying Process " << running->process << ", Page: " << endl;
          }
          cout << "OBJ " << i+1 << ": " << obj[i] << endl;
@@ -1144,8 +1151,8 @@ void OS::system_info(int level)
 
 int main(int argc, char *argv[])
 {
-    //Keeping use of args by casting method
-    char* progList = argv[1];
+   //Keeping use of args by casting method
+   char* progList = argv[1];
    char* page_replacement_algorithm = argv[2];
    
    if(DEBUG > 0)
@@ -1155,10 +1162,10 @@ int main(int argc, char *argv[])
    }
    
    //Instantiate OS
-    OS os(progList, page_replacement_algorithm);
+   OS os(progList, page_replacement_algorithm);
 
-    //run os
-    os.run();
+   //run os
+   os.run();
 
-    return 0;
+   return 0;
 }//main

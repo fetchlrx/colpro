@@ -16,7 +16,7 @@ void PageTable::set_frame(int index, int frame)
 {
    frame <<= 2;
    table[index] &= 3;  //reset any previous frame
-    table[index] |= (frame); // or with frame number
+   table[index] |= (frame); // or with frame number
    set_valid(index, 1);
 }//set_frame 
 
@@ -31,33 +31,35 @@ void PageTable::set_modify_bit(int index, int value)
 */
 void PageTable::set_valid(int index, int value)
 {
-    table[index] &= 125; //1111101
-    table[index] |= (value << 1);
+   table[index] &= 125; //1111101
+   table[index] |= (value << 1);
 }//set_valid
 
 int PageTable::get_frame(int index)
 {
-    int value = table[index] & f_mask; //0111 1100
-    value >>= 2;
-    return value;
+   int value = table[index] & f_mask; //0111 1100
+   value >>= 2;
+   return value;
 }//get_frame
 
 bool PageTable::get_mod(int index)
 {
-    int value = table[index] & m_mask; //0000 0001
+   int value = table[index] & m_mask; //0000 0001
    
-   if( value == 1 ){   
+   if( value == 1 )
+   {   
       return true;
    }
-    return false;
+   return false;
 }//get_mod
 
 bool PageTable::get_valid(int index)
 {
-    int value = table[index] & v_mask; //0000 0010
-    value >>= 1;
-   if( value == 1 ){   
+   int value = table[index] & v_mask; //0000 0010
+   value >>= 1;
+   if( value == 1 )
+   {   
       return true;
    }
-    return false;
+   return false;
 }//get_valid

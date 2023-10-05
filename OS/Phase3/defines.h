@@ -29,12 +29,12 @@
 #define DEFINES_H
 
 struct instruction_register{
-      int op; //operand;
-      int destReg; //index for destination register
-      int immediate;  //immediate
-      int sourceReg; //index source register
-      int constant; //constant
-      int addr; //address
+   int op; //operand;
+   int destReg; //index for destination register
+   int immediate;  //immediate
+   int sourceReg; //index source register
+   int constant; //constant
+   int addr; //address
 };
 
 #endif

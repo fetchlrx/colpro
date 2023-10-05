@@ -9,45 +9,44 @@
 
 vector<string> block(string buffer, int b)
 {
-  // blocks the buffer into a list of blocks of size b
+   // blocks the buffer into a list of blocks of size b
 
-  vector<string> blocks;
-  int numberofblocks=0;
+   vector<string> blocks;
+   int numberofblocks=0;
 
-  if (buffer.length() % b == 0) 
-  { 
-    numberofblocks= buffer.length()/b;
-  } 
-  else 
-  { 
-    numberofblocks= buffer.length()/b +1;
-  }
+   if (buffer.length() % b == 0) 
+   { 
+      numberofblocks= buffer.length()/b;
+   } 
+   else 
+   { 
+      numberofblocks= buffer.length()/b +1;
+   }
 
-  string tempblock;
-  for (int i=0; i<numberofblocks; i++) 
-  { 
-    tempblock=buffer.substr(b*i,b);
-    blocks.push_back(tempblock);
-  }
+   string tempblock;
+   for (int i=0; i<numberofblocks; i++) 
+   { 
+      tempblock=buffer.substr(b*i,b);
+      blocks.push_back(tempblock);
+   }
 
-  int lastblock=blocks.size()-1;
+   int lastblock=blocks.size()-1;
 
-  for (int i=blocks[lastblock].length(); i<b; i++) 
-  { 
-    blocks[lastblock]+="#";
-  }
+   for (int i=blocks[lastblock].length(); i<b; i++) 
+   { 
+      blocks[lastblock]+="#";
+   }
 
-  return blocks;
-
+   return blocks;
 }
 
 Filesys::Filesys(string diskname, int numberofblocks, int blocksize): Sdisk(diskname,numberofblocks,blocksize)
 {
-    rootsize = getblocksize() / 12;
-    fatsize = ((getnumberofblocks() * 6) / getblocksize() ) + 1 ;
-   
-    string buffer;
-    getblock(0,buffer);
+      rootsize = getblocksize() / 12;
+      fatsize = ((getnumberofblocks() * 6) / getblocksize() ) + 1 ;
+
+      string buffer;
+      getblock(0,buffer);
    if(buffer[0] == '#')
    {   //no file system build root and fat
       ///Build Root
@@ -64,16 +63,16 @@ Filesys::Filesys(string diskname, int numberofblocks, int blocksize): Sdisk(disk
       }
       for(int i = fatsize + 1; i < getnumberofblocks(); i++)
       {
-          fat.push_back(i+1); //rest of fat
-       }
+            fat.push_back(i+1); //rest of fat
+      }
       fat[fat.size()-1] = 0; //end of fat;
       fssynch();
-       }
-       else
-       {
+   }
+   else
+   {
       istringstream instream;
       instream.str(buffer);
-       //read in root
+         //read in root
       for(int i = 0; i < rootsize; i++)
       {
          string file;
@@ -99,7 +98,6 @@ Filesys::Filesys(string diskname, int numberofblocks, int blocksize): Sdisk(disk
          fat.push_back(n); //push back n to fat
       }   
    }//end else
-       
 }
 int Filesys::fsclose()
 {

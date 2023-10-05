@@ -23,26 +23,26 @@ using namespace std;
 class Assembler 
 {
    private:
-   string op;
-   int rd;
-   int i;
-   int rs;
-   int con;
-   int addr;
-   int opcode;
-   int instr;
-   vector<int> obj;
-   
+      string op;
+      int rd;
+      int i;
+      int rs;
+      int con;
+      int addr;
+      int opcode;
+      int instr;
+      vector<int> obj;
+      
    public:
-   Assembler(); //constructor
-   void assemble(fstream &assembly, fstream &objectfile); //loads memory vector then performs instr-fetch-execute
-   void objectfile();
-   
-    //////Checks if instructions are good/////////
-    void checkrd();
-   void checkrs();
-   void checkaddr();
-   void checkcon();
+      Assembler(); //constructor
+      void assemble(fstream &assembly, fstream &objectfile); //loads memory vector then performs instr-fetch-execute
+      void objectfile();
+      
+      //////Checks if instructions are good/////////
+      void checkrd();
+      void checkrs();
+      void checkaddr();
+      void checkcon();
 };
 
 #endif

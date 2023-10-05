@@ -31,61 +31,62 @@ OS::OS(string arg)
    halt = 0; //number of programs that have halted
 
    //Gathers all *.s files and puts them into a file called "progs"
-    system("ls progs/*.s > progsList");
+   system("ls progs/*.s > progsList");
 
-    //Init of variables and objects
-    fstream assemblefile, objectfile, progs_file;
-    string sfilename, ofilename;
+   //Init of variables and objects
+   fstream assemblefile, objectfile, progs_file;
+   string sfilename, ofilename;
 
    //Open "progs" file so program can grab the list of *.s files to
-    //assemble. Then input file stream into a string. inputfile will
-    //contain add5.s then fact.s and then test.s
-    progs_file.open("progsList", ios::in);
-    progs_file >> sfilename;
+   //assemble. Then input file stream into a string. inputfile will
+   //contain add5.s then fact.s and then test.s
+   progs_file.open("progsList", ios::in);
+   progs_file >> sfilename;
     
    p = new PCB;
-    //The while loops loops through all files in "progs" and assemble their 
-    //*.o file.
-   while(progs_file.good()) {
-        //First get process name
-        p->set_process(sfilename.substr(0, sfilename.length() - 2));
-        
-        assemblefile.open(sfilename.c_str(), ios::in);
-    
-        ofilename = sfilename.replace(sfilename.find('.'), sfilename.length(),".o");
-        objectfile.open(ofilename.c_str(),ios::out);
-    
-        //Assemble the files to .o
-        as.assemble(assemblefile, objectfile);
-        
-        //Close i/o stream
-        objectfile.close();
-        assemblefile.close();
+   //The while loops loops through all files in "progs" and assemble their 
+   //*.o file.
+   while(progs_file.good()) 
+   {
+      //First get process name
+      p->set_process(sfilename.substr(0, sfilename.length() - 2));
+      
+      assemblefile.open(sfilename.c_str(), ios::in);
+   
+      ofilename = sfilename.replace(sfilename.find('.'), sfilename.length(),".o");
+      objectfile.open(ofilename.c_str(),ios::out);
+   
+      //Assemble the files to .o
+      as.assemble(assemblefile, objectfile);
+      
+      //Close i/o stream
+      objectfile.close();
+      assemblefile.close();
 
-        //Load each object program into memory and set up process info
-        objectfile.open(ofilename.c_str(), ios::in);
+      //Load each object program into memory and set up process info
+      objectfile.open(ofilename.c_str(), ios::in);
       
       //////////////VM LOAD/////////////////
         vm.load(objectfile, p);
       ///////////////////////////////////
-      
-        objectfile.close();
 
-        //push processor into jobs list
-        jobs.push_back(p);
+      objectfile.close();
 
-        //create a new object of type PCB
-        p = new PCB;
+      //push processor into jobs list
+      jobs.push_back(p);
 
-        //input next .s file into inputfile
-        progs_file >> sfilename;
+      //create a new object of type PCB
+      p = new PCB;
+
+      //input next .s file into inputfile
+      progs_file >> sfilename;
     }
     progs_file.close(); //close file w/ list of progs
 
 
    //push jobs into readyQ
-    list<PCB*>::iterator it = jobs.begin();
-    for(it; it != jobs.end(); it++)
+   list<PCB*>::iterator it = jobs.begin();
+   for(it; it != jobs.end(); it++)
    {
          readyQ.push(*it);   
       (*it)->ready_start = vm.clock; 
@@ -100,7 +101,8 @@ OS::OS(string arg)
       string infile = (*it)->process + ".in";
       (*it)->in.open(infile.c_str(), ios::in);
    }
-   if(DEBUG > 0){ //DEBUG defined in VirtualMachine.h
+   if(DEBUG > 0)
+   { //DEBUG defined in VirtualMachine.h
       cout << "------PROCESSES---------" << endl;
       int i = 1;
       for(it = jobs.begin(); it != jobs.end(); it++)
@@ -205,10 +207,6 @@ void OS::context(int status)
       waitQ.push(running); /// move program to waitQ
       write(reg); //call write()
    }
-   else //error
-   {
-      
-   }
    if(readyQ.empty() && !waitQ.empty())
    {
       idle_time += waitQ.front()->wait - vm.clock;
@@ -254,13 +252,13 @@ void OS::syncPCB()
    //check size of stack for largest stack size
    if((vm.MEM_SIZE - vm.sp) > running->lstack_size) //if virtual machine contains a larger stack than the PCB
    {   
-         running->lstack_size = (vm.MEM_SIZE - vm.sp); //largest stack size = stack 
+      running->lstack_size = (vm.MEM_SIZE - vm.sp); //largest stack size = stack 
    }
    running->sp = vm.sp;
    running->sr = vm.sr;
    running->r = vm.r;
-    if(vm.sp < vm.MEM_SIZE) //there is a stack
-    {   
+   if(vm.sp < vm.MEM_SIZE) //there is a stack
+   {   
       //open stack file
       string stackfile = running->process + ".st";
       running->st.open(stackfile.c_str(), ios::out);
@@ -272,7 +270,7 @@ void OS::syncPCB()
          running->st << vm.mem[--i] << endl;
       }   
       running->st.close();
-      }
+   }
    return;
 }
 void OS::read(int reg)
@@ -319,15 +317,15 @@ void OS::checkwaitQ()
 
 int main(int argc, char *argv[])
 {
-    //Keeping use of args by casting method
-    argv[1] = (char *) "progs";
-    string arg = argv[1];
+   //Keeping use of args by casting method
+   argv[1] = (char *) "progs";
+   string arg = argv[1];
 
    //Instantiate OS//
-    OS os(arg);
+   OS os(arg);
 
-    //run os//
-    os.run();
+   //run os//
+   os.run();
 
-    return 0;
+   return 0;
 }//main

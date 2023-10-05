@@ -100,8 +100,8 @@ int Shell::type(string file)//lists the contents of file
          content += buffer; //add buffer to string
          block = nextblock(file, block); // go to next block 
       }
-         cout << content.substr(0,content.find('~')) << endl; //cout content
-         return 1;
+      cout << content.substr(0,content.find('~')) << endl; //cout content
+      return 1;
    }
 }
 int Shell::copy(string file1, string file2)//copies file1 to file2
@@ -125,7 +125,6 @@ int Shell::copy(string file1, string file2)//copies file1 to file2
       addblock(file2, buffer); //add block containing buffer
       block = nextblock(file1, block); //move to next block
    }
-   return 1;
-   
+   return 1;  
 }
 
