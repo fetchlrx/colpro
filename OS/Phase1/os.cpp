@@ -39,11 +39,11 @@ int main(int argc, char *argv[])
     inputfile.open(input.c_str(),ios::in);
 
     //open output file for clock and "write"
-    fstream outputfile;		
+    fstream outputfile;      
     string output = arg.replace(arg.find('.'),arg.length(),".out");
     outputfile.open(output.c_str(), ios::out);
 
-    //open objectfile		
+    //open objectfile      
     objectfile.open(object.c_str(),ios::in | ios::out);
     
 

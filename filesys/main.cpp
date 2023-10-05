@@ -1,6 +1,6 @@
 #include "sdisk.h"
 #include "filesys.h"
-	
+   
 vector<string> block(string buffer, int blocknumber);
 
 int main()
@@ -50,7 +50,7 @@ int main()
 
   buffer.clear();
   fsys.readblock("file2",36, buffer);
-	
+   
   cout << buffer << endl;
 
   cout << "file 2 next block = " << fsys.nextblock("file2",14);

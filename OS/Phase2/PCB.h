@@ -21,7 +21,7 @@ public:
     
     //set process name
     void set_process(string p) {process = p;}
-	
+   
     //Getter methods
     int get_pc() { return pc; }
     int get_sr() { return sr; }
@@ -32,7 +32,7 @@ public:
     string get_process() { return process; }
 
 
-	friend class OS;
+   friend class OS;
     
 private:
     int pc; //program counter
@@ -44,11 +44,11 @@ private:
     int wait;
     fstream* s,o,in,out,st; //streams for each program
     int cpu_time; //time spent executing
-	int wait_time; //time spent in readyQ, waiting to execute
-	int turnaround_time; //total time from start to finish
-	int io_time; //time spent in waitQ, waiting for IO to complete
-	int lstack_size; //largest stack size for program
-	int io_start, ready_start; //times entering waitQ and ReadyQ respectively
+   int wait_time; //time spent in readyQ, waiting to execute
+   int turnaround_time; //total time from start to finish
+   int io_time; //time spent in waitQ, waiting for IO to complete
+   int lstack_size; //largest stack size for program
+   int io_start, ready_start; //times entering waitQ and ReadyQ respectively
 
     //Setter methods
     void set_pc(int p) { pc = p; }

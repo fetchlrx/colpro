@@ -28,7 +28,7 @@ public:
     void set_size(int pages);
     //void fill_table(string file);
 
-	vector<int> table; 
+   vector<int> table; 
 private:
     static const int f_mask = 124; //0111 1100
     static const int v_mask = 2; //0000 0010 valid = 1, invalid = 0

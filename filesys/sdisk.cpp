@@ -10,7 +10,7 @@ Sdisk::Sdisk(string diskname, int numberofblocks, int blocksize)
    this->numberofblocks = numberofblocks; //set number of blocks
    this->blocksize = blocksize; //set blocksize
 
-   fstream disk(diskname.c_str());	
+   fstream disk(diskname.c_str());   
    if(!disk.good()) //if file does not exist
    {
       disk.open(diskname.c_str(), ios::out); //create it
@@ -56,7 +56,7 @@ int Sdisk::putblock(int blocknumber, string buffer)
    //if string is larger than blocksize, then cannot put
    if(buffer.length() > blocksize)
    {
-	   return 0;
+      return 0;
    }
 
    fstream outfile; //fstream
@@ -69,16 +69,16 @@ int Sdisk::putblock(int blocknumber, string buffer)
       i++;
    }
    outfile.close();
-	
+   
    string test; //test if success
    getblock(blocknumber, test); //load string test with block blocknumber
    if(test == buffer) //if string test = string buffer
    {
-	   return 1; //success
+      return 1; //success
    }  
    else
    {
-	   return 0; //failure
+      return 0; //failure
    }
 }
 int Sdisk::getnumberofblocks()
